@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+{% block title %}AI Coach - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4 d-flex flex-column">
+        <h3 class="mb-3">AI Finance Coach</h3>
+
+        <div class="glass-card flex-grow-1 d-flex flex-column p-3 ai-chat-card">
+            <div id="chatMessages" class="chat-messages flex-grow-1">
+                {% for msg in chat_history or [] %}
+                    <div class="chat-bubble {{ 'chat-user' if msg.sender == 'user' else 'chat-ai' }}">
+                        {% if msg.sender != 'user' %}<i class="bi bi-robot"></i>{% endif %}
+                        <span>{{ msg.message }}</span>
+                    </div>
+                {% else %}
+                    <div class="chat-bubble chat-ai">
+                        <i class="bi bi-robot"></i>
+                        <span>Hi! I'm your AI finance coach. Ask me anything about budgeting, saving, or your spending habits.</span>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form id="chatForm" method="POST" action="{{ url_for('ai.send_message') }}" class="chat-input-form d-flex gap-2 mt-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="text" name="message" id="chatInput" class="form-control" placeholder="Ask about your finances..." required autocomplete="off">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
+            </form>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/ai.js') }}"></script>
+{% endblock %}

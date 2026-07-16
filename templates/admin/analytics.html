@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+{% block title %}Platform Analytics - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Platform Analytics</h3>
+
+        <div class="row g-3 mb-4">
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>New Signups (30 Days)</h6>
+                    <canvas id="signupsChart" height="110"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Total Platform Volume</h6>
+                    <canvas id="volumeChart" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Most Used Categories</h6>
+                    <canvas id="popularCategoriesChart" height="110"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>AI Feature Usage</h6>
+                    <canvas id="aiUsageChart" height="110"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

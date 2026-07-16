@@ -1,0 +1,39 @@
+<aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-brand d-flex align-items-center gap-2 px-3 py-3">
+        <img src="{{ url_for('static', filename='images/logo/logo.png') }}" height="30" alt="logo">
+        <span>Finance Coach</span>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="{{ 'active' if request.endpoint == 'dashboard.index' }}">
+            <a href="{{ url_for('dashboard.index') }}"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'expense.list_expenses' }}">
+            <a href="{{ url_for('expense.list_expenses') }}"><i class="bi bi-wallet2"></i> <span>Expenses</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'income.list_income' }}">
+            <a href="{{ url_for('income.list_income') }}"><i class="bi bi-cash-coin"></i> <span>Income</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'budget.list_budgets' }}">
+            <a href="{{ url_for('budget.list_budgets') }}"><i class="bi bi-pie-chart"></i> <span>Budgets</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'savings.list_savings' }}">
+            <a href="{{ url_for('savings.list_savings') }}"><i class="bi bi-piggy-bank"></i> <span>Savings Goals</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'dashboard.analytics' }}">
+            <a href="{{ url_for('dashboard.analytics') }}"><i class="bi bi-graph-up"></i> <span>Analytics</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'ai.chat' }}">
+            <a href="{{ url_for('ai.chat') }}"><i class="bi bi-robot"></i> <span>AI Coach</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'reports.view_reports' }}">
+            <a href="{{ url_for('reports.view_reports') }}"><i class="bi bi-file-earmark-bar-graph"></i> <span>Reports</span></a>
+        </li>
+        <li class="sidebar-divider"></li>
+        <li class="{{ 'active' if request.endpoint == 'profile.settings' }}">
+            <a href="{{ url_for('profile.settings') }}"><i class="bi bi-gear"></i> <span>Settings</span></a>
+        </li>
+        <li>
+            <a href="{{ url_for('auth.logout') }}" class="text-danger"><i class="bi bi-box-arrow-right"></i> <span>Logout</span></a>
+        </li>
+    </ul>
+</aside>

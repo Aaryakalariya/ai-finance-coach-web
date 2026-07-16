@@ -1,0 +1,121 @@
+{% extends "layouts/base.html" %}
+{% block title %}Expenses - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Expenses</h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                <i class="bi bi-plus-lg"></i> Add Expense
+            </button>
+        </div>
+
+        <div class="glass-card p-3 mb-3">
+            <form method="GET" class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-select">
+                        <option value="">All Categories</option>
+                        {% for cat in categories or [] %}
+                        <option value="{{ cat.id }}" {{ 'selected' if request.args.get('category')|string == cat.id|string }}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">From</label>
+                    <input type="date" name="from_date" class="form-control" value="{{ request.args.get('from_date', '') }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">To</label>
+                    <input type="date" name="to_date" class="form-control" value="{{ request.args.get('to_date', '') }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-outline-primary w-100">Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="glass-card p-3">
+            <table class="table app-table">
+                <thead>
+                    <tr><th>Date</th><th>Description</th><th>Category</th><th>Payment Method</th><th class="text-end">Amount</th><th></th></tr>
+                </thead>
+                <tbody>
+                {% for expense in expenses or [] %}
+                    <tr>
+                        <td>{{ expense.date }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td><span class="badge category-badge">{{ expense.category_name }}</span></td>
+                        <td>{{ expense.payment_method }}</td>
+                        <td class="text-end text-danger">-₹{{ "%.2f"|format(expense.amount) }}</td>
+                        <td class="text-end">
+                            <a href="{{ url_for('expense.edit_expense', expense_id=expense.id) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                            <form method="POST" action="{{ url_for('expense.delete_expense', expense_id=expense.id) }}" class="d-inline" onsubmit="return confirm('Delete this expense?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6" class="text-center text-muted">No expenses found</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+
+<div class="modal fade" id="addExpenseModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('expense.add_expense') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Expense</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" name="amount" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category_id" class="form-select" required>
+                            {% for cat in categories or [] %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" name="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <select name="payment_method" class="form-select">
+                            <option>Cash</option><option>Card</option><option>UPI</option><option>Bank Transfer</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/expense.js') }}"></script>
+{% endblock %}

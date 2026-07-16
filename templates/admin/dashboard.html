@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+{% block title %}Admin Dashboard - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Admin Dashboard</h3>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card glass-card p-3">
+                    <span class="stat-label">Total Users</span>
+                    <h4 class="stat-value text-primary">{{ total_users or 0 }}</h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card glass-card p-3">
+                    <span class="stat-label">Active Today</span>
+                    <h4 class="stat-value text-success">{{ active_today or 0 }}</h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card glass-card p-3">
+                    <span class="stat-label">Total Transactions</span>
+                    <h4 class="stat-value">{{ total_transactions or 0 }}</h4>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card glass-card p-3">
+                    <span class="stat-label">AI Requests Today</span>
+                    <h4 class="stat-value text-warning">{{ ai_requests_today or 0 }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-lg-8">
+                <div class="glass-card p-3">
+                    <h6>User Growth (Last 30 Days)</h6>
+                    <canvas id="userGrowthChart" height="90"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="glass-card p-3">
+                    <h6>System Health</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex justify-content-between py-1"><span>Database</span><span class="badge bg-success">Online</span></li>
+                        <li class="d-flex justify-content-between py-1"><span>AI Service</span><span class="badge bg-success">Online</span></li>
+                        <li class="d-flex justify-content-between py-1"><span>Email Service</span><span class="badge bg-success">Online</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-3">
+            <h6>Recent Activity</h6>
+            <table class="table app-table">
+                <thead><tr><th>User</th><th>Action</th><th>Timestamp</th></tr></thead>
+                <tbody>
+                {% for activity in recent_activity or [] %}
+                    <tr><td>{{ activity.user }}</td><td>{{ activity.action }}</td><td>{{ activity.timestamp }}</td></tr>
+                {% else %}
+                    <tr><td colspan="3" class="text-center text-muted">No recent activity</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% block title %}Analytics - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Analytics</h3>
+
+        <div class="row g-3 mb-4">
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Income vs Expenses (Last 6 Months)</h6>
+                    <canvas id="incomeExpenseChart" height="120"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Spending by Category</h6>
+                    <canvas id="categoryBreakdownChart" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Savings Growth</h6>
+                    <canvas id="savingsGrowthChart" height="120"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-3">
+                    <h6>Predicted Next Month Spend</h6>
+                    <h2 class="text-primary">₹{{ "%.2f"|format(predicted_spend or 0) }}</h2>
+                    <p class="text-muted">Based on your last 3 months of spending patterns.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script>
+    window.analyticsData = {
+        incomeExpense: {{ income_expense_chart_data | default('{}') | safe }},
+        categoryBreakdown: {{ category_chart_data | default('{}') | safe }},
+        savingsGrowth: {{ savings_chart_data | default('{}') | safe }}
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+{% block title %}Sign Up - AI Finance Coach{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper d-flex align-items-center justify-content-center">
+    <div class="glass-card auth-card p-4 p-md-5">
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename='images/logo/logo.png') }}" height="40" alt="logo">
+            <h3 class="mt-3">Create Your Account</h3>
+            <p class="text-muted">Start your journey to smarter finances</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.register') }}" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="mb-3">
+                <label class="form-label" for="full_name">Full Name</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required
+                       placeholder="John Doe">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" required
+                       placeholder="you@example.com">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" required
+                           minlength="8" placeholder="At least 8 characters">
+                    <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength mt-1" id="passwordStrength"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                <label class="form-check-label" for="terms">
+                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+        </form>
+
+        <p class="text-center mt-4 mb-0">
+            Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+{% endblock %}

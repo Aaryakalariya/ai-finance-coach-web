@@ -1,0 +1,42 @@
+<aside class="app-sidebar admin-sidebar" id="appSidebar">
+    <div class="sidebar-brand d-flex align-items-center gap-2 px-3 py-3">
+        <img src="{{ url_for('static', filename='images/logo/logo.png') }}" height="30" alt="logo">
+        <span>Admin Panel</span>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="{{ 'active' if request.endpoint == 'admin.dashboard' }}">
+            <a href="{{ url_for('admin.dashboard') }}"><i class="bi bi-speedometer2"></i> <span>Dashboard</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.users' }}">
+            <a href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i> <span>Users</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.transactions' }}">
+            <a href="{{ url_for('admin.transactions') }}"><i class="bi bi-receipt"></i> <span>Transactions</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.categories' }}">
+            <a href="{{ url_for('admin.categories') }}"><i class="bi bi-tags"></i> <span>Categories</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.analytics' }}">
+            <a href="{{ url_for('admin.analytics') }}"><i class="bi bi-graph-up-arrow"></i> <span>Analytics</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.ai_logs' }}">
+            <a href="{{ url_for('admin.ai_logs') }}"><i class="bi bi-robot"></i> <span>AI Logs</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.reports' }}">
+            <a href="{{ url_for('admin.reports') }}"><i class="bi bi-file-earmark-bar-graph"></i> <span>Reports</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.activity_logs' }}">
+            <a href="{{ url_for('admin.activity_logs') }}"><i class="bi bi-clock-history"></i> <span>Activity Logs</span></a>
+        </li>
+        <li class="{{ 'active' if request.endpoint == 'admin.feedback' }}">
+            <a href="{{ url_for('admin.feedback') }}"><i class="bi bi-chat-dots"></i> <span>Feedback</span></a>
+        </li>
+        <li class="sidebar-divider"></li>
+        <li class="{{ 'active' if request.endpoint == 'admin.settings' }}">
+            <a href="{{ url_for('admin.settings') }}"><i class="bi bi-gear"></i> <span>Settings</span></a>
+        </li>
+        <li>
+            <a href="{{ url_for('auth.logout') }}" class="text-danger"><i class="bi bi-box-arrow-right"></i> <span>Logout</span></a>
+        </li>
+    </ul>
+</aside>
