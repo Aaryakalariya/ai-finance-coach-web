@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+{% block title %}My Profile - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">My Profile</h3>
+
+        <div class="glass-card p-4">
+            <div class="text-center mb-4">
+                <img src="{{ current_user.avatar_url if current_user and current_user.avatar_url else url_for('static', filename='images/avatars/default.png') }}"
+                     class="profile-avatar" alt="avatar">
+                <div class="mt-2">
+                    <label class="btn btn-outline-primary btn-sm">
+                        Change Photo
+                        <input type="file" name="avatar" hidden id="avatarInput">
+                    </label>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="full_name" class="form-control" value="{{ current_user.full_name if current_user else '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ current_user.email if current_user else '' }}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" value="{{ current_user.phone if current_user else '' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Currency</label>
+                        <select name="currency" class="form-select">
+                            <option value="INR" {{ 'selected' if current_user and current_user.currency == 'INR' }}>INR (₹)</option>
+                            <option value="USD" {{ 'selected' if current_user and current_user.currency == 'USD' }}>USD ($)</option>
+                            <option value="EUR" {{ 'selected' if current_user and current_user.currency == 'EUR' }}>EUR (€)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+            </form>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}

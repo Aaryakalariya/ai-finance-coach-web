@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %}
+{% block title %}Send Notifications - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Send Notification</h3>
+
+        <div class="glass-card p-4">
+            <form method="POST" action="{{ url_for('admin.send_notification') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="mb-3">
+                    <label class="form-label">Audience</label>
+                    <select name="audience" class="form-select">
+                        <option value="all">All Users</option>
+                        <option value="active">Active Users Only</option>
+                        <option value="specific">Specific User</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Notification</button>
+            </form>
+        </div>
+
+        <div class="glass-card p-3 mt-4">
+            <h6>Sent Notifications</h6>
+            <table class="table app-table">
+                <thead><tr><th>Title</th><th>Audience</th><th>Sent On</th></tr></thead>
+                <tbody>
+                {% for note in sent_notifications or [] %}
+                    <tr><td>{{ note.title }}</td><td>{{ note.audience }}</td><td>{{ note.sent_at }}</td></tr>
+                {% else %}
+                    <tr><td colspan="3" class="text-center text-muted">No notifications sent yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}

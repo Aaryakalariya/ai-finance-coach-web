@@ -1,0 +1,33 @@
+{% extends "layouts/base.html" %}
+{% block title %}AI Logs - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">AI Interaction Logs</h3>
+
+        <div class="glass-card p-3">
+            <table class="table app-table">
+                <thead><tr><th>User</th><th>Prompt</th><th>Response Summary</th><th>Tokens</th><th>Timestamp</th></tr></thead>
+                <tbody>
+                {% for log in ai_logs or [] %}
+                    <tr>
+                        <td>{{ log.user_name }}</td>
+                        <td class="text-truncate" style="max-width:220px;">{{ log.prompt }}</td>
+                        <td class="text-truncate" style="max-width:220px;">{{ log.response_summary }}</td>
+                        <td>{{ log.tokens_used }}</td>
+                        <td>{{ log.created_at }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5" class="text-center text-muted">No AI logs yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}

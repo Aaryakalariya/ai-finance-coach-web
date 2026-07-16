@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+{% block title %}Budgets - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Budgets</h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBudgetModal">
+                <i class="bi bi-plus-lg"></i> Set Budget
+            </button>
+        </div>
+
+        <div class="row g-3">
+        {% for budget in budgets or [] %}
+            <div class="col-md-4">
+                <div class="glass-card p-3">
+                    <div class="d-flex justify-content-between">
+                        <h6>{{ budget.category_name }}</h6>
+                        <span class="text-muted">₹{{ "%.0f"|format(budget.spent) }} / ₹{{ "%.0f"|format(budget.limit) }}</span>
+                    </div>
+                    {% set pct = (budget.spent / budget.limit * 100) if budget.limit else 0 %}
+                    <div class="progress" style="height:8px;">
+                        <div class="progress-bar {{ 'bg-danger' if pct > 90 else ('bg-warning' if pct > 70 else 'bg-success') }}"
+                             style="width: {{ pct if pct <= 100 else 100 }}%"></div>
+                    </div>
+                    <small class="text-muted">{{ "%.0f"|format(pct) }}% used</small>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center text-muted py-5">No budgets set yet. Create one to start tracking.</div>
+        {% endfor %}
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+
+<div class="modal fade" id="addBudgetModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('budget.add_budget') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set Budget</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category_id" class="form-select" required>
+                            {% for cat in categories or [] %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Monthly Limit</label>
+                        <input type="number" step="0.01" name="limit" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Budget</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/budget.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+{% block title %}Admin Settings - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Platform Settings</h3>
+
+        <div class="glass-card p-4 mb-3">
+            <h6>General</h6>
+            <form method="POST" action="{{ url_for('admin.update_settings') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Platform Name</label>
+                        <input type="text" name="platform_name" class="form-control" value="{{ settings.platform_name or 'AI Finance Coach' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Support Email</label>
+                        <input type="email" name="support_email" class="form-control" value="{{ settings.support_email or '' }}">
+                    </div>
+                </div>
+                <div class="form-check form-switch mt-3">
+                    <input class="form-check-input" type="checkbox" name="maintenance_mode"
+                           {{ 'checked' if settings and settings.maintenance_mode }}>
+                    <label class="form-check-label">Maintenance Mode</label>
+                </div>
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" name="allow_registrations"
+                           {{ 'checked' if settings and settings.allow_registrations }}>
+                    <label class="form-check-label">Allow New Registrations</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save Settings</button>
+            </form>
+        </div>
+
+        <div class="glass-card p-4">
+            <h6>AI Configuration</h6>
+            <form method="POST" action="{{ url_for('admin.update_ai_settings') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Daily AI Request Limit (per user)</label>
+                        <input type="number" name="ai_daily_limit" class="form-control" value="{{ settings.ai_daily_limit or 20 }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">AI Model</label>
+                        <input type="text" name="ai_model" class="form-control" value="{{ settings.ai_model or 'gemini-pro' }}" readonly>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save AI Settings</button>
+            </form>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}

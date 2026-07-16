@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+{% block title %}Admin Reports - AI Finance Coach{% endblock %}
+{% block body_class %}app-page admin-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/admin_sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Platform Reports</h3>
+
+        <div class="glass-card p-4 mb-4">
+            <h6>Generate System Report</h6>
+            <form method="POST" action="{{ url_for('admin.generate_report') }}" class="row g-2 align-items-end">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="col-md-4">
+                    <label class="form-label">Report Type</label>
+                    <select name="report_type" class="form-select">
+                        <option value="user_growth">User Growth</option>
+                        <option value="revenue">Platform Volume</option>
+                        <option value="engagement">Engagement</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">From</label>
+                    <input type="date" name="from_date" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">To</label>
+                    <input type="date" name="to_date" class="form-control" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Generate</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="glass-card p-3">
+            <table class="table app-table">
+                <thead><tr><th>Name</th><th>Type</th><th>Generated On</th><th></th></tr></thead>
+                <tbody>
+                {% for report in reports or [] %}
+                    <tr>
+                        <td>{{ report.name }}</td>
+                        <td>{{ report.type }}</td>
+                        <td>{{ report.generated_at }}</td>
+                        <td class="text-end"><a href="{{ url_for('admin.download_report', report_id=report.id) }}" class="btn btn-sm btn-outline-primary">Download</a></td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="text-center text-muted">No reports yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}

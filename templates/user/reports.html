@@ -1,0 +1,76 @@
+{% extends "layouts/base.html" %}
+{% block title %}Reports - AI Finance Coach{% endblock %}
+{% block body_class %}app-page{% endblock %}
+
+{% block content %}
+{% include "layouts/navbar.html" %}
+<div class="app-body d-flex">
+    {% include "layouts/sidebar.html" %}
+    <main class="app-main flex-grow-1 p-4">
+        <h3 class="mb-4">Reports</h3>
+
+        <div class="glass-card p-4 mb-4">
+            <h6>Generate a Report</h6>
+            <form method="POST" action="{{ url_for('reports.generate_report') }}" class="row g-2 align-items-end">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="col-md-3">
+                    <label class="form-label">Report Type</label>
+                    <select name="report_type" class="form-select">
+                        <option value="monthly">Monthly Summary</option>
+                        <option value="category">Category Breakdown</option>
+                        <option value="yearly">Yearly Summary</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">From</label>
+                    <input type="date" name="from_date" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">To</label>
+                    <input type="date" name="to_date" class="form-control" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Format</label>
+                    <select name="format" class="form-select">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary w-100">Go</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="glass-card p-3">
+            <h6>Past Reports</h6>
+            <table class="table app-table">
+                <thead><tr><th>Name</th><th>Type</th><th>Generated On</th><th>Format</th><th></th></tr></thead>
+                <tbody>
+                {% for report in past_reports or [] %}
+                    <tr>
+                        <td>{{ report.name }}</td>
+                        <td>{{ report.type }}</td>
+                        <td>{{ report.generated_at }}</td>
+                        <td><span class="badge bg-secondary">{{ report.format|upper }}</span></td>
+                        <td class="text-end">
+                            <a href="{{ url_for('reports.download_report', report_id=report.id) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-download"></i> Download
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5" class="text-center text-muted">No reports generated yet</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% include "layouts/footer.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}
