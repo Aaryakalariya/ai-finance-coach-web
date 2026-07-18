@@ -1,0 +1,21 @@
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #eef1ff 0%, #f5f6fa 100%);
+}
+
+[data-theme="dark"] .auth-wrapper {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+}

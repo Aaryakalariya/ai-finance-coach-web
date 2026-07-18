@@ -1,0 +1,24 @@
+.admin-login-page .auth-card {
+    background: rgba(31, 41, 55, 0.9);
+    border: 1px solid #374151;
+    color: #f9fafb;
+}
+
+.admin-login-page .form-label {
+    color: #d1d5db;
+}
+
+.admin-login-page .form-control {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+.admin-login-page .form-control:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+.admin-login-page i.bi-shield-lock {
+    color: var(--color-primary-light);
+}

@@ -1,0 +1,28 @@
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: var(--bg-body);
+}
+
+[data-theme="dark"] .theme-toggle i::before {
+    content: "\f5a2";
+}

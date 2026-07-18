@@ -1,0 +1,22 @@
+@media (max-width: 767.98px) {
+    .app-main {
+        padding: 16px !important;
+    }
+    .stat-card h4 {
+        font-size: 1.2rem;
+    }
+    .auth-card {
+        padding: 24px !important;
+    }
+    .otp-box {
+        width: 38px;
+        height: 46px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .app-body {
+        position: relative;
+    }
+}
