@@ -1,0 +1,36 @@
+.chat-messages {
+    overflow-y: auto;
+    max-height: 60vh;
+    padding: 10px;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.chat-ai {
+    background: var(--bg-body);
+    color: var(--text-primary);
+    margin-right: auto;
+}
+
+.chat-user {
+    background: var(--color-primary);
+    color: #fff;
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+
+.ai-chat-card {
+    min-height: 70vh;
+}
+
+.chat-input-form input {
+    border-radius: 30px;
+}

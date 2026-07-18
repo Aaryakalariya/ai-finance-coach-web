@@ -1,0 +1,28 @@
+.stat-card {
+    border-radius: var(--radius-md);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.stat-value {
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.category-badge {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--color-primary);
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.notif-unread {
+    background: rgba(79, 70, 229, 0.05);
+    border-left: 3px solid var(--color-primary);
+}

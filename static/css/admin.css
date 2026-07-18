@@ -1,0 +1,11 @@
+.admin-sidebar .sidebar-brand {
+    background: rgba(79, 70, 229, 0.05);
+}
+
+.admin-login-page {
+    background: #0f172a;
+}
+
+.admin-page .app-table th {
+    background: var(--bg-body);
+}

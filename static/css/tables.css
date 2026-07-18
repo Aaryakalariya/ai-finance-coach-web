@@ -1,0 +1,26 @@
+.app-table {
+    margin-bottom: 0;
+    color: var(--text-primary);
+}
+
+.app-table thead th {
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+}
+
+.app-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-table tbody tr:hover {
+    background: var(--bg-body);
+}
+
+.app-table td, .app-table th {
+    padding: 12px 10px;
+    vertical-align: middle;
+}

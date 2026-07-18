@@ -1,0 +1,56 @@
+.app-sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    min-height: calc(100vh - var(--navbar-height));
+    position: sticky;
+    top: var(--navbar-height);
+    align-self: flex-start;
+}
+
+.sidebar-brand {
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.sidebar-nav li a:hover {
+    background: var(--bg-body);
+    color: var(--color-primary);
+}
+
+.sidebar-nav li.active a {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--color-primary);
+    font-weight: 500;
+    border-right: 3px solid var(--color-primary);
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 10px 0;
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        position: fixed;
+        left: -260px;
+        top: var(--navbar-height);
+        z-index: 1020;
+        transition: left var(--transition-normal);
+        box-shadow: var(--shadow-lg);
+    }
+    .app-sidebar.show {
+        left: 0;
+    }
+}
